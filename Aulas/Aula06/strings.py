@@ -2,7 +2,7 @@
 nome1 = "vitor"
 nome2 = 'alexandre'
 # Variáveis podem ser concatenadas para gerar um resultado combinado.
-nome_completo =" " + nome1 + " " + nome2 + " "
+nome_completo = " " + nome1 + " " + nome2 + " "
 print(nome_completo)
 # Métodos são funções e ferramentas diversas para variáveis.
 # Ex: Método Title deixa somente as primeiras letras duma “string” maiúsculas.
