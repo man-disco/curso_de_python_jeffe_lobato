@@ -10,9 +10,3 @@ for atr, val in alien_0.items():
     print(atr)
     print(val)
     print('')
-
-
-username = ' mamute .e'
-print('Seu nome de usuário é ' + username)
-print('Seu nome de usuário é ' + username.lstrip())
-
