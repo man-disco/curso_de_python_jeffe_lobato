@@ -1,6 +1,6 @@
 # 3 - Usuários: Crie uma classe chamada Usuário. Crie dois atributos de nomes primeiro_nome e ultimo_nome e, então crie
 # vários outros atributos normalmente armazenados em um perfil de usuário. Escreva um método de nome descricao_usuario()
-# que apresente um resumo das informações do usuário. Escreva outro método chamado saudacao_usuario(0 que mostre uma sau
+# que apresente um resumo das informações do usuário. Escreva outro método chamado saudacao_usuario que mostre uma sau
 # dação para cada usuário.
 class Usuario:
     """Classe para definir um usuário."""
