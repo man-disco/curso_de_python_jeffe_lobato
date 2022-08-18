@@ -22,8 +22,8 @@ class Restaurante:
         self.tipo_cozinha = tipo_cozinha
 
     def restaurante_descricao(self):
-        print('\n * O restaurante se chama ' + self.restaurante_nome.title() + ' e sua especialidade é ' + self.tipo_cozinha
-              + '.')
+        print('\n * O restaurante se chama ' + self.restaurante_nome.title() + ' e sua especialidade é ' + self
+              .tipo_cozinha + '.')
 
     def restaurante_aberto(self):
         print(' * O restaurante ' + self.restaurante_nome.title() + ' está aberto.')
@@ -45,3 +45,5 @@ restaurante3.restaurante_descricao()
 # ------------------------------------------------
 restaurante4 = Restaurante('Girafas', 'comida tradicional')
 restaurante4.restaurante_descricao()
+print('')
+
