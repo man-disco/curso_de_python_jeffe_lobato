@@ -37,13 +37,11 @@ class Janela:
         self.lb1["text"] = "Deu certo! (muda_label2)"
 
 
+# Por eu estar no linux mint (Ubuntu) por algum motivo o arquivo '.ico' não é reconhecido então eu pulei essa
+# parte.
 raiz = Tk()
 Janela(raiz)
 raiz.geometry("800x600+100+0")
 raiz.title("Meu programa")
 raiz["bg"] = '#8bb158'
-
-# Por eu estar no linux mint (Ubuntu) por algum motivo o arquivo '.ico' não é reconhecido então eu pulei essa
-# parte.
-
 raiz.mainloop()
