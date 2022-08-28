@@ -11,7 +11,7 @@ if idade < 16:
     print(nome + ', você tem ' + str(idade) + " anos e você não pode votar.")
 
 elif (16 >= idade <= 17) or (idade > 64):
-    print(nome +', você tem ' + str(idade) + " anos e seu voto é opcional.")
+    print(nome + ', você tem ' + str(idade) + " anos e seu voto é opcional.")
 
 elif idade > 64:
     print(nome + ', você tem ' + str(idade) + " anos e seu voto é opcional.")
