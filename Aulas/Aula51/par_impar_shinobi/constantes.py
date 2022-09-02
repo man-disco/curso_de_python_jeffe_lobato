@@ -6,7 +6,7 @@ azul_claro = "#E0FFFF"
 azul2 = "#40E0D0"
 vermelho = "red"
 
-fonte1 = ("Ubuntu", 25, "underline")
-fonte2 = ("Verdana", 15, "bold")
+fonte1 = ("Ubuntu", 25)
+fonte2 = ("Ubuntu", 15, "bold")
 fonte3 = ("Verdana", 20, "bold")
 fonte4 = ("Verdana", 12, "bold")
