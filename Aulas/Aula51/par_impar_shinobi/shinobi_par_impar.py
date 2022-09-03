@@ -1,10 +1,13 @@
+import random
 from tkinter import *
 from constantes import *
 from calculo_par_impar import *
+import random
 
 raiz = Tk()
 
 
+# noinspection PyStatementEffect
 class Janela:
     def __init__(self, raiz):
         # --- Frames ---
@@ -50,20 +53,31 @@ class Janela:
         self.placar2 = 0
         self.escolha = StringVar()
         self.rb_par = Radiobutton(self.fr4, text="Par", value="par", variable=self.escolha, bg=cinza1, fg=branco,
-                                  font=fonte2, pady=20, padx=20, selectcolor=cinza1, highlightthickness=0
-                                  , activebackground=cinza1)
+                                  font=fonte2, pady=20, padx=20, selectcolor=cinza1, highlightthickness=0,
+                                  activebackground=cinza1)
         self.rb_par.pack(side=LEFT)
-        self.lb_separador2 = Label(self.fr4, text="  ", bg=cinza1, padx=10)
+        self.lb_separador2 = Label(self.fr4, text="  ", bg=cinza1)
         self.lb_separador2.pack(side=LEFT)
-        self.rb_impar = Radiobutton(self.fr4, text="Impar", value="impar", variable=self.escolha, bg=cinza1, fg=branco
-                                    , font=fonte2, pady=20, padx=20, selectcolor=cinza1, highlightthickness=0,
+        self.rb_impar = Radiobutton(self.fr4, text="Impar", value="impar", variable=self.escolha, bg=cinza1, fg=branco,
+                                    font=fonte2, pady=20, padx=20, selectcolor=cinza1, highlightthickness=0,
                                     activebackground=cinza1)
 
         self.rb_impar.pack(side=LEFT)
+        self.num = Entry(self.fr5, background=cinza1, width=2, font=('Ubuntu', 16, "bold"), fg=branco, borderwidth=0,
+                         border=0)
+        self.num.pack(side=RIGHT)
+
+        self.lb_separador3 = Label(self.fr6, text=" ", bg=cinza1)
+        self.lb_separador3.pack()
+        self.bt_jogar = Button(self.fr6, bg=cinza1, text="Jogar", width=12, fg=branco, font=fonte2, padx=40,
+                               command=self.jogar, borderwidth=0)
+        self.bt_jogar.bind("<Tab>", self.jogar2)
+        self.bt_jogar.focus()
+        self.bt_jogar.pack()
 
         #  --- Labels ---
         # Label 1
-        self.lb1 = Label(self.fr1, bg=cinza1, font=fonte1, fg=branco, text="Batalha Shinobi", pady=10)
+        self.lb1 = Label(self.fr1, bg=cinza1, font=fonte1, fg=branco, text="Par ou Ímpar", pady=30)
         self.lb1.pack()
         # Label resultado
         self.lb_result = Label(self.fr1, bg=cinza1, font=fonte2, fg="green", pady=5, text="")
@@ -74,17 +88,17 @@ class Janela:
         # Label separador
         self.lb_separador = Label(self.fr3, text="  ", bg=cinza1)
         self.lb_separador.pack(side=LEFT)
-        # Label (imagem) jogador
-        self.lb_img1 = Label(self.fr3, image=self.img_maq)
-        self.lb_img1.pack(side=RIGHT)
+        # Label (imagem) robo
+        self.lb_img2 = Label(self.fr3, image=self.img_maq)
+        self.lb_img2.pack(side=RIGHT)
         # Label 2
-        self.lb2 = Label(self.fr1, bg=cinza1, font=fonte2, fg=branco,
-                         text="Jogador        " + str(self.placar1) + "      X      " + str(
-                             self.placar2) + "       Máquina", pady=10)
+        self.lb2 = Label(self.fr1, bg=cinza1, font=fonte2, fg=branco, text="Jogador        " + str(self.placar1) +
+                                                                           "      X      " + str(
+            self.placar2) + "       Máquina", pady=10)
         self.lb2.pack()
         # Label 3
-        self.lb3 = Label(self.fr3, bg=cinza1)
-        self.lb3.pack()
+        self.lb3 = Label(self.fr5, bg=cinza1, text="Número de 1 a 10: ", fg=branco, font=fonte2)
+        self.lb3.pack(side=LEFT)
         # Label 4
         self.lb4 = Label(self.fr4, bg=cinza1)
         self.lb4.pack()
@@ -94,17 +108,180 @@ class Janela:
         # label 6
         self.lb6 = Label(self.fr6, bg=cinza1)
         self.lb6.pack()
+        # Label mensagem erro
+        self.lb_erro = Label(self.fr6, bg=cinza1, text="", fg=vermelho, font=fonte2)
+        self.lb_erro.pack()
+
+        # -- Funções --
+
+    try:
+        def jogar(self):
+            num = int(self.num.get())
+            escolha = self.escolha.get()
+            num_robo = random.randrange(0, 11)
+
+            print(num)
+            print(escolha)
+            print(num_robo)
+
+            if escolha == 'par' or escolha == 'impar':
+                if num == 0:
+                    self.lb_img1['image'] = self.img0
+
+                elif num == 1:
+                    self.lb_img1['image'] = self.img1
+                    self.lb_erro["text"] = ""
+                elif num == 2:
+                    self.lb_img1['image'] = self.img2
+                    self.lb_erro["text"] = ""
+                elif num == 3:
+                    self.lb_img1['image'] = self.img3
+                    self.lb_erro["text"] = ""
+                elif num == 4:
+                    self.lb_img1['image'] = self.img4
+                    self.lb_erro["text"] = ""
+                elif num == 5:
+                    self.lb_img1['image'] = self.img5
+                    self.lb_erro["text"] = ""
+                elif num == 6:
+                    self.lb_img1['image'] = self.img6
+                    self.lb_erro["text"] = ""
+                elif num == 7:
+                    self.lb_img1['image'] = self.img7
+                    self.lb_erro["text"] = ""
+                elif num == 8:
+                    self.lb_img1['image'] == self.img8
+                    self.lb_erro["text"] = ""
+                elif num == 9:
+                    self.lb_img1['image'] = self.img9
+                    self.lb_erro["text"] = ""
+                elif num == 10:
+                    self.lb_img1['image'] = self.img10
+                    self.lb_erro["text"] = ""
+                else:
+                    self.lb_erro["text"] = "Erro: Escolha par ou ímpar e digite um número até 10."
+
+            if num_robo == 0:
+                self.lb_img1['image'] = self.img0
+
+            elif num_robo == 1:
+                self.lb_img2['image'] = self.img1
+                self.lb_erro["text"] = ""
+            elif num_robo == 2:
+                self.lb_img2['image'] = self.img2
+                self.lb_erro["text"] = ""
+            elif num_robo == 3:
+                self.lb_img2['image'] = self.img3
+                self.lb_erro["text"] = ""
+            elif num_robo == 4:
+                self.lb_img2['image'] = self.img4
+                self.lb_erro["text"] = ""
+            elif num_robo == 5:
+                self.lb_img2['image'] = self.img5
+                self.lb_erro["text"] = ""
+            elif num_robo == 6:
+                self.lb_img2['image'] = self.img6
+                self.lb_erro["text"] = ""
+            elif num_robo == 7:
+                self.lb_img2['image'] = self.img7
+                self.lb_erro["text"] = ""
+            elif num_robo == 8:
+                self.lb_img2['image'] = self.img8
+                self.lb_erro["text"] = ""
+            elif num_robo == 9:
+                self.lb_img2['image'] = self.img9
+                self.lb_erro["text"] = ""
+            elif num_robo == 10:
+                self.lb_img2['image'] = self.img10
+                self.lb_erro["text"] = ""
+
+    except:
+        pass
+
+    def jogar2(self, event):
+        num = int(self.num.get())
+        escolha = self.escolha.get()
+        num_robo = random.randrange(0, 11)
+        print(num)
+        print(escolha)
+        print(num_robo)
+
+        if escolha == 'par' or escolha == 'impar':
+            if num == 0:
+                self.lb_img1['image'] == self.img0
+
+            elif num == 1:
+                self.lb_img1['image'] == self.img1
+
+            elif num == 3:
+                self.lb_img1['image'] == self.img3
+
+            elif num == 4:
+                self.lb_img1['image'] == self.img4
+
+            elif num == 5:
+                self.lb_img1['image'] == self.img5
+
+            elif num == 6:
+                self.lb_img1['image'] == self.img6
+
+            elif num == 7:
+                self.lb_img1['image'] == self.img7
+
+            elif num == 8:
+                self.lb_img1['image'] == self.img8
+
+            elif num == 9:
+                self.lb_img1['image'] == self.img9
+
+            elif num == 10:
+                self.lb_img1['image'] == self.img10
+
+            # ROBO
+            if num_robo == 0:
+                self.lb_img1['image'] == self.img0
+
+            elif num_robo == 1:
+                self.lb_img2['image'] == self.img1
+                self.lb_erro["text"] = ""
+            elif num_robo == 2:
+                self.lb_img2['image'] == self.img2
+                self.lb_erro["text"] = ""
+            elif num_robo == 3:
+                self.lb_img2['image'] == self.img3
+                self.lb_erro["text"] = ""
+            elif num_robo == 4:
+                self.lb_img2['image'] == self.img4
+                self.lb_erro["text"] = ""
+            elif num_robo == 5:
+                self.lb_img2['image'] == self.img5
+                self.lb_erro["text"] = ""
+            elif num_robo == 6:
+                self.lb_img2['image'] == self.img6
+                self.lb_erro["text"] = ""
+            elif num_robo == 7:
+                self.lb_img2['image'] == self.img7
+                self.lb_erro["text"] = ""
+            elif num_robo == 8:
+                self.lb_img2['image'] == self.img8
+                self.lb_erro["text"] = ""
+            elif num_robo == 9:
+                self.lb_img2['image'] = self.img9
+                self.lb_erro["text"] = ""
+            elif num_robo == 10:
+                self.lb_img2['image'] = self.img10
+                self.lb_erro["text"] = ""
 
 
 janela = Janela(raiz)
 # Tamanho da janela
-raiz.geometry("800x600+300+30")
+raiz.geometry("800x750+300+30")
 
 # raiz.iconbitmap('Aulas/Aula51/par_impar_shinobi/arq_projeto_shinobi/jogadorr.ico') não funciona no Ubuntu.
 # Tente:
-icon = PhotoImage(file="arq_projeto_shinobi/robo.png")
+icon = PhotoImage(file="arq_projeto_shinobi/jogador.png")
 raiz.tk.call('wm', 'iconphoto', raiz._w, icon)
-raiz.title("Shinobi: Par ou Ímpar")
+raiz.title("Tux: Par ou Ímpar")
 raiz["bg"] = cinza1
 
 raiz.mainloop()
