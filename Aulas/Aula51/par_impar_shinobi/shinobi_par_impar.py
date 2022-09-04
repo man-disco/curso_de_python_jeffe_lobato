@@ -36,6 +36,9 @@ class Janela:
         # Frame 7
         self.fr7 = Frame(raiz, bg=cinza1)
         self.fr7.pack()
+        # Frame 8
+        self.fr8 = Frame(raiz, bg=cinza1)
+        self.fr8.pack()
         # -- Imagens --
         # Imagem do jogador
         self.img_jogador = PhotoImage(file="arq_projeto_shinobi/jogador.png")
@@ -64,32 +67,38 @@ class Janela:
         self.rb_par.pack(side=LEFT)
         self.lb_separador2 = Label(self.fr4, text="  ", bg=cinza1)
         self.lb_separador2.pack(side=LEFT)
-        self.rb_impar = Radiobutton(self.fr4, text="Impar", value="impar", variable=self.escolha, bg=cinza1, fg=branco,
+        self.rb_impar = Radiobutton(self.fr4, text="Ímpar", value="impar", variable=self.escolha, bg=cinza1, fg=branco,
                                     font=fonte2, pady=20, padx=20, selectcolor=cinza1, highlightthickness=0,
                                     activebackground=cinza1)
 
         self.rb_impar.pack(side=LEFT)
-        self.num = Entry(self.fr5, background=cinza1, width=2, font=('Ubuntu', 16, "bold"), fg=branco, borderwidth=0,
+        self.num = Entry(self.fr5, background=cinza1, width=2, font=('Ubuntu', 15, "bold"), fg=branco, borderwidth=0,
                          border=0)
         self.num.pack(side=RIGHT)
 
         self.lb_separador3 = Label(self.fr6, text=" ", bg=cinza1)
         self.lb_separador3.pack()
         self.bt_jogar = Button(self.fr6, bg=cinza1, text="Jogar", width=12, fg=branco, font=fonte2, padx=40,
-                               command=self.jogar, borderwidth=0)
+                               command=self.jogar, borderwidth=0, cursor="hand2")
         self.bt_jogar.bind("<Tab>", self.jogar2)
         self.bt_jogar.pack()
 
-        self.bt_restart = Button(self.fr6, bg=cinza1, text="Reiniciar", width=12, fg=branco, font=fonte2, padx=40,
-                                 command=self.restart, borderwidth=0)
+        self.bt_restart = Button(self.fr7, bg=cinza1, text="Reiniciar", width=12, fg=branco, font=fonte2, padx=40,
+                                 command=self.restart, borderwidth=0, cursor="hand2")
         self.bt_restart.pack()
+        self.bt_info = Button(self.fr8, bg=cinza1, text="Info", width=4, fg=branco, font=fonte2,
+                              command=self.info, borderwidth=0, )
+        self.bt_info.pack(side=RIGHT)
 
         #  --- Labels ---
         # Label 1
-        self.lb1 = Label(self.fr1, bg=cinza1, font=fonte1, fg=branco, text="Par ou Ímpar", pady=30)
+        self.lb1 = Label(self.fr1, bg=cinza1, font=fonte1, fg=branco, text="Par ou Ímpar", pady=20)
         self.lb1.pack()
+        # Label separa botão info e titulo
+        self.lb_separador4 = Label(self.fr1, text="       ", bg=cinza1, padx=50)
+        self.lb_separador4.pack(side=RIGHT)
         # Label resultado
-        self.lb_result = Label(self.fr1, bg=cinza1, font=fonte2, fg="green", text="", pady=5)
+        self.lb_result = Label(self.fr1, bg=cinza1, font=fonte2, fg="green", text="", padx=1)
         self.lb_result.pack()
         # Label (imagem) jogador
         self.lb_img1 = Label(self.fr3, image=self.img_jogador)
@@ -101,9 +110,10 @@ class Janela:
         self.lb_img2 = Label(self.fr3, image=self.img_maq)
         self.lb_img2.pack(side=RIGHT)
         # Label 2
-        self.lb2 = Label(self.fr1, bg=cinza1, font=fonte2, fg=branco, text="Jogador/a        " + str(self.placar1) +
-                                                                           "      X      " + str(
-            self.placar2) + "       Máquina", pady=10)
+        self.lb2 = Label(self.fr1, bg=cinza1, font=fonte2, fg=branco, text="                         Jogador/a        "
+                                                                           + str(self.placar1) +
+                                                                           "     X    " + str(
+                                                                            self.placar2) + "       Máquina", padx=10)
         self.lb2.pack()
         # Label 3
         self.lb3 = Label(self.fr5, bg=cinza1, text="Número de 1 a 10: ", fg=branco, font=fonte2)
@@ -118,8 +128,8 @@ class Janela:
         self.lb6 = Label(self.fr6, bg=cinza1)
         self.lb6.pack()
         # Label mensagem erro
-        self.lb_erro = Label(self.fr7, bg=cinza1, text="", fg=vermelho, font=fonte2)
-        self.lb_erro.pack()
+        self.lb_erro = Label(self.fr7, bg=cinza1, text="", fg=vermelho, font=fonte2, pady=10)
+        self.lb_erro.pack(side=RIGHT)
         # -- Funções --
 
     def jogar(self):
@@ -163,7 +173,7 @@ class Janela:
                     self.lb_img1['image'] = self.img10
                     self.lb_erro["text"] = ""
                 else:
-                    self.lb_erro["text"] = "Erro: Escolha par ou ímpar e digite um número até 10."
+                    self.lb_erro["text"] = "Erro: Escolha um número de 0 até 10."
 
                 if escolha != 'par' and escolha != 'impar':
                     self.lb_erro["text"] = "Ação invalida, tente novamente."
@@ -171,29 +181,33 @@ class Janela:
                 if 0 <= num <= 10:
                     par_impar = calcular_par_impar(num, num_robo)
                     if par_impar == "par":
-                        self.lb_result['text'] = 'Deu Par'
+                        self.lb_result['text'] = "                         " + str(num + num_robo) + ' Deu Par'
                     elif par_impar == "impar":
-                        self.lb_result['text'] = 'Deu Impar'
-                        print(par_impar)
+                        self.lb_result['text'] = "                         " + str(num + num_robo) + ' Deu Ímpar'
                     else:
-                        self.lb_erro["text"] = "Erro: Digite um valor entre 0 e 10."
+                        self.lb_erro["text"] = "Erro: Escolha par ou ímpar e digite um número até 10."
 
                         # Pontuações
                     if par_impar == "par" and escolha == "par":
                         self.placar1 += 1
-                        self.lb2['text'] = "Jogador/a        " + str(self.placar1) + "      X      " + str(
+                        self.lb2['text'] = "                         Jogador/a        " + str(self.placar1) \
+                                           + "     X    " + str(
                             self.placar2) + "      Máquina"
                     elif par_impar == "par" and escolha == "impar":
                         self.placar2 += 1
-                        self.lb2['text'] = "Jogador/a        " + str(self.placar1) + "      X      " + str(
+                        self.lb2['text'] = "                         Jogador/a        " + str(self.placar1) \
+                                           + "     X    " + str(
                             self.placar2) + "      Máquina"
                     if par_impar == "impar" and escolha == "impar":
                         self.placar1 += 1
-                        self.lb2['text'] = "Jogador/a        " + str(self.placar1) + "      X      " + str(
+                        self.lb2['text'] = "                         Jogador/a        " + str(self.placar1) \
+                                           + "     X    " + str(
                             self.placar2) + "      Máquina"
+
                     elif par_impar == "impar" and escolha == "par":
                         self.placar2 += 1
-                        self.lb2['text'] = "Jogador/a        " + str(self.placar1) + "      X      " + str(
+                        self.lb2['text'] = "                         Jogador/a        " + str(
+                            self.placar1) + "     X    " + str(
                             self.placar2) + "      Máquina"
 
                     # Altera imagem do robo
@@ -229,14 +243,13 @@ class Janela:
 
                     elif num_robo == 10:
                         self.lb_img2['image'] = self.img10
-
-                else:
-                    self.lb_erro["text"] = "Erro: Escolha um número entre 0 e 10."
+                    else:
+                        self.lb_erro["text"] = "Erro: Escolha um número entre 0 e 10."
             else:
                 self.lb_erro["text"] = "Erro: Por favor escolha par ou ímpar."
 
         except ValueError:
-            self.lb_erro["text"] = "Erro: Você digitou um valor inválido, tente novamente."
+            self.lb_erro["text"] = "Erro: Digite um valor entre 0 e 10."
 
     def jogar2(self, event):
         pass
@@ -246,6 +259,12 @@ class Janela:
         if resposta == "yes":
             reinicia_programa()
 
+    def info(self):
+        info = mbox.showinfo("Informações", "Feito por João Lucas com a ajuda de Jefferson Lobato.\n"
+                                            "                                                                      "
+                                            "Este software está licenciado sobre a licensa de código aberto GPL 3.0 "
+                                            "https://www.gnu.org/licenses/gpl-3.0.en.html")
+
 
 def reinicia_programa():
     python = sys.executable
@@ -254,7 +273,7 @@ def reinicia_programa():
 
 janela = Janela(raiz)
 # Tamanho da janela
-raiz.geometry("800x750+300+30")
+raiz.geometry("750x750+300+30")
 
 # raiz.iconbitmap('Aulas/Aula51/par_impar_shinobi/arq_projeto_shinobi/jogadorr.ico') não funciona no Ubuntu.
 # Tente:
