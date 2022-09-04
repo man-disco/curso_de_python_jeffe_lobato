@@ -1,14 +1,18 @@
 import random
 from tkinter import *
-from constantes import *
+import os
+import sys
 from calculo_par_impar import *
-import random
+from constantes import *
+import tkinter.messagebox as mbox
 
 raiz = Tk()
 
 
 # noinspection PyStatementEffect
+
 class Janela:
+
     def __init__(self, raiz):
         # --- Frames ---
         # Frame 1
@@ -29,7 +33,9 @@ class Janela:
         # Frame 6
         self.fr6 = Frame(raiz, bg=cinza1)
         self.fr6.pack()
-
+        # Frame 7
+        self.fr7 = Frame(raiz, bg=cinza1)
+        self.fr7.pack()
         # -- Imagens --
         # Imagem do jogador
         self.img_jogador = PhotoImage(file="arq_projeto_shinobi/jogador.png")
@@ -72,15 +78,18 @@ class Janela:
         self.bt_jogar = Button(self.fr6, bg=cinza1, text="Jogar", width=12, fg=branco, font=fonte2, padx=40,
                                command=self.jogar, borderwidth=0)
         self.bt_jogar.bind("<Tab>", self.jogar2)
-        self.bt_jogar.focus()
         self.bt_jogar.pack()
+
+        self.bt_restart = Button(self.fr6, bg=cinza1, text="Reiniciar", width=12, fg=branco, font=fonte2, padx=40,
+                                 command=self.restart, borderwidth=0)
+        self.bt_restart.pack()
 
         #  --- Labels ---
         # Label 1
         self.lb1 = Label(self.fr1, bg=cinza1, font=fonte1, fg=branco, text="Par ou Ímpar", pady=30)
         self.lb1.pack()
         # Label resultado
-        self.lb_result = Label(self.fr1, bg=cinza1, font=fonte2, fg="green", pady=5, text="")
+        self.lb_result = Label(self.fr1, bg=cinza1, font=fonte2, fg="green", text="", pady=5)
         self.lb_result.pack()
         # Label (imagem) jogador
         self.lb_img1 = Label(self.fr3, image=self.img_jogador)
@@ -92,7 +101,7 @@ class Janela:
         self.lb_img2 = Label(self.fr3, image=self.img_maq)
         self.lb_img2.pack(side=RIGHT)
         # Label 2
-        self.lb2 = Label(self.fr1, bg=cinza1, font=fonte2, fg=branco, text="Jogador        " + str(self.placar1) +
+        self.lb2 = Label(self.fr1, bg=cinza1, font=fonte2, fg=branco, text="Jogador/a        " + str(self.placar1) +
                                                                            "      X      " + str(
             self.placar2) + "       Máquina", pady=10)
         self.lb2.pack()
@@ -109,25 +118,20 @@ class Janela:
         self.lb6 = Label(self.fr6, bg=cinza1)
         self.lb6.pack()
         # Label mensagem erro
-        self.lb_erro = Label(self.fr6, bg=cinza1, text="", fg=vermelho, font=fonte2)
+        self.lb_erro = Label(self.fr7, bg=cinza1, text="", fg=vermelho, font=fonte2)
         self.lb_erro.pack()
-
         # -- Funções --
 
-    try:
-        def jogar(self):
+    def jogar(self):
+        try:
             num = int(self.num.get())
             escolha = self.escolha.get()
             num_robo = random.randrange(0, 11)
 
-            print(num)
-            print(escolha)
-            print(num_robo)
-
             if escolha == 'par' or escolha == 'impar':
+
                 if num == 0:
                     self.lb_img1['image'] = self.img0
-
                 elif num == 1:
                     self.lb_img1['image'] = self.img1
                     self.lb_erro["text"] = ""
@@ -161,116 +165,91 @@ class Janela:
                 else:
                     self.lb_erro["text"] = "Erro: Escolha par ou ímpar e digite um número até 10."
 
-            if num_robo == 0:
-                self.lb_img1['image'] = self.img0
+                if escolha != 'par' and escolha != 'impar':
+                    self.lb_erro["text"] = "Ação invalida, tente novamente."
 
-            elif num_robo == 1:
-                self.lb_img2['image'] = self.img1
-                self.lb_erro["text"] = ""
-            elif num_robo == 2:
-                self.lb_img2['image'] = self.img2
-                self.lb_erro["text"] = ""
-            elif num_robo == 3:
-                self.lb_img2['image'] = self.img3
-                self.lb_erro["text"] = ""
-            elif num_robo == 4:
-                self.lb_img2['image'] = self.img4
-                self.lb_erro["text"] = ""
-            elif num_robo == 5:
-                self.lb_img2['image'] = self.img5
-                self.lb_erro["text"] = ""
-            elif num_robo == 6:
-                self.lb_img2['image'] = self.img6
-                self.lb_erro["text"] = ""
-            elif num_robo == 7:
-                self.lb_img2['image'] = self.img7
-                self.lb_erro["text"] = ""
-            elif num_robo == 8:
-                self.lb_img2['image'] = self.img8
-                self.lb_erro["text"] = ""
-            elif num_robo == 9:
-                self.lb_img2['image'] = self.img9
-                self.lb_erro["text"] = ""
-            elif num_robo == 10:
-                self.lb_img2['image'] = self.img10
-                self.lb_erro["text"] = ""
+                if 0 <= num <= 10:
+                    par_impar = calcular_par_impar(num, num_robo)
+                    if par_impar == "par":
+                        self.lb_result['text'] = 'Deu Par'
+                    elif par_impar == "impar":
+                        self.lb_result['text'] = 'Deu Impar'
+                        print(par_impar)
+                    else:
+                        self.lb_erro["text"] = "Erro: Digite um valor entre 0 e 10."
 
-    except:
-        pass
+                        # Pontuações
+                    if par_impar == "par" and escolha == "par":
+                        self.placar1 += 1
+                        self.lb2['text'] = "Jogador/a        " + str(self.placar1) + "      X      " + str(
+                            self.placar2) + "      Máquina"
+                    elif par_impar == "par" and escolha == "impar":
+                        self.placar2 += 1
+                        self.lb2['text'] = "Jogador/a        " + str(self.placar1) + "      X      " + str(
+                            self.placar2) + "      Máquina"
+                    if par_impar == "impar" and escolha == "impar":
+                        self.placar1 += 1
+                        self.lb2['text'] = "Jogador/a        " + str(self.placar1) + "      X      " + str(
+                            self.placar2) + "      Máquina"
+                    elif par_impar == "impar" and escolha == "par":
+                        self.placar2 += 1
+                        self.lb2['text'] = "Jogador/a        " + str(self.placar1) + "      X      " + str(
+                            self.placar2) + "      Máquina"
+
+                    # Altera imagem do robo
+                    if num_robo == 0:
+                        self.lb_img2['image'] = self.img0
+
+                    elif num_robo == 1:
+                        self.lb_img2['image'] = self.img1
+
+                    elif num_robo == 2:
+                        self.lb_img2['image'] = self.img2
+
+                    elif num_robo == 3:
+                        self.lb_img2['image'] = self.img3
+
+                    elif num_robo == 4:
+                        self.lb_img2['image'] = self.img4
+
+                    elif num_robo == 5:
+                        self.lb_img2['image'] = self.img5
+
+                    elif num_robo == 6:
+                        self.lb_img2['image'] = self.img6
+
+                    elif num_robo == 7:
+                        self.lb_img2['image'] = self.img7
+
+                    elif num_robo == 8:
+                        self.lb_img2['image'] = self.img8
+
+                    elif num_robo == 9:
+                        self.lb_img2['image'] = self.img9
+
+                    elif num_robo == 10:
+                        self.lb_img2['image'] = self.img10
+
+                else:
+                    self.lb_erro["text"] = "Erro: Escolha um número entre 0 e 10."
+            else:
+                self.lb_erro["text"] = "Erro: Por favor escolha par ou ímpar."
+
+        except ValueError:
+            self.lb_erro["text"] = "Erro: Você digitou um valor inválido, tente novamente."
 
     def jogar2(self, event):
-        num = int(self.num.get())
-        escolha = self.escolha.get()
-        num_robo = random.randrange(0, 11)
-        print(num)
-        print(escolha)
-        print(num_robo)
+        pass
 
-        if escolha == 'par' or escolha == 'impar':
-            if num == 0:
-                self.lb_img1['image'] == self.img0
+    def restart(self):
+        resposta = mbox.askquestion("Reiniciar", "Deseja reiniciar o programa?")
+        if resposta == "yes":
+            reinicia_programa()
 
-            elif num == 1:
-                self.lb_img1['image'] == self.img1
 
-            elif num == 3:
-                self.lb_img1['image'] == self.img3
-
-            elif num == 4:
-                self.lb_img1['image'] == self.img4
-
-            elif num == 5:
-                self.lb_img1['image'] == self.img5
-
-            elif num == 6:
-                self.lb_img1['image'] == self.img6
-
-            elif num == 7:
-                self.lb_img1['image'] == self.img7
-
-            elif num == 8:
-                self.lb_img1['image'] == self.img8
-
-            elif num == 9:
-                self.lb_img1['image'] == self.img9
-
-            elif num == 10:
-                self.lb_img1['image'] == self.img10
-
-            # ROBO
-            if num_robo == 0:
-                self.lb_img1['image'] == self.img0
-
-            elif num_robo == 1:
-                self.lb_img2['image'] == self.img1
-                self.lb_erro["text"] = ""
-            elif num_robo == 2:
-                self.lb_img2['image'] == self.img2
-                self.lb_erro["text"] = ""
-            elif num_robo == 3:
-                self.lb_img2['image'] == self.img3
-                self.lb_erro["text"] = ""
-            elif num_robo == 4:
-                self.lb_img2['image'] == self.img4
-                self.lb_erro["text"] = ""
-            elif num_robo == 5:
-                self.lb_img2['image'] == self.img5
-                self.lb_erro["text"] = ""
-            elif num_robo == 6:
-                self.lb_img2['image'] == self.img6
-                self.lb_erro["text"] = ""
-            elif num_robo == 7:
-                self.lb_img2['image'] == self.img7
-                self.lb_erro["text"] = ""
-            elif num_robo == 8:
-                self.lb_img2['image'] == self.img8
-                self.lb_erro["text"] = ""
-            elif num_robo == 9:
-                self.lb_img2['image'] = self.img9
-                self.lb_erro["text"] = ""
-            elif num_robo == 10:
-                self.lb_img2['image'] = self.img10
-                self.lb_erro["text"] = ""
+def reinicia_programa():
+    python = sys.executable
+    os.execl(python, python, *sys.argv)
 
 
 janela = Janela(raiz)
@@ -279,7 +258,7 @@ raiz.geometry("800x750+300+30")
 
 # raiz.iconbitmap('Aulas/Aula51/par_impar_shinobi/arq_projeto_shinobi/jogadorr.ico') não funciona no Ubuntu.
 # Tente:
-icon = PhotoImage(file="arq_projeto_shinobi/jogador.png")
+icon = PhotoImage(file="arq_projeto_shinobi/icon.png")
 raiz.tk.call('wm', 'iconphoto', raiz._w, icon)
 raiz.title("Tux: Par ou Ímpar")
 raiz["bg"] = cinza1
