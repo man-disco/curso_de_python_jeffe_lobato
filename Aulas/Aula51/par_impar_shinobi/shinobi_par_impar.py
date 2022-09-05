@@ -1,11 +1,8 @@
 import random
 from tkinter import *
-import os
-import sys
 from calculo_par_impar import *
 from constantes import *
 import tkinter.messagebox as mbox
-
 raiz = Tk()
 
 
@@ -113,7 +110,7 @@ class Janela:
         self.lb2 = Label(self.fr1, bg=cinza1, font=fonte2, fg=branco, text="                         Jogador/a        "
                                                                            + str(self.placar1) +
                                                                            "     X    " + str(
-                                                                            self.placar2) + "       Máquina", padx=10)
+            self.placar2) + "       Máquina", padx=10)
         self.lb2.pack()
         # Label 3
         self.lb3 = Label(self.fr5, bg=cinza1, text="Número de 1 a 10: ", fg=branco, font=fonte2)
@@ -257,7 +254,15 @@ class Janela:
     def restart(self):
         resposta = mbox.askquestion("Reiniciar", "Deseja reiniciar o programa?")
         if resposta == "yes":
-            reinicia_programa()
+            self.lb_erro["text"] = ""
+            self.lb_result["text"] = ""
+            self.placar1 = 0
+            self.placar2 = 0
+            self.lb_img1['image'] = self.img_jogador
+            self.lb_img2['image'] = self.img_maq
+            self.lb2['text'] = "                         Jogador/a        " + str(self.placar1) \
+                               + "     X    " + str(
+                self.placar2) + "      Máquina"
 
     def info(self):
         info = mbox.showinfo("Informações", "Feito por João Lucas com a ajuda de Jefferson Lobato.\n"
@@ -266,18 +271,13 @@ class Janela:
                                             "https://www.gnu.org/licenses/gpl-3.0.en.html")
 
 
-def reinicia_programa():
-    python = sys.executable
-    os.execl(python, python, *sys.argv)
-
-
 janela = Janela(raiz)
 # Tamanho da janela
 raiz.geometry("750x750+300+30")
 
 # raiz.iconbitmap('Aulas/Aula51/par_impar_shinobi/arq_projeto_shinobi/jogadorr.ico') não funciona no Ubuntu.
 # Tente:
-icon = PhotoImage(file="arq_projeto_shinobi/icon.png")
+icon = PhotoImage(file="arq_projeto_shinobi/jogador.png")
 raiz.tk.call('wm', 'iconphoto', raiz._w, icon)
 raiz.title("Tux: Par ou Ímpar")
 raiz["bg"] = cinza1
