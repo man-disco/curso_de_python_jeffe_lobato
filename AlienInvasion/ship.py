@@ -2,10 +2,10 @@ import pygame
 
 
 class Ship:
-    def __init__(self, screen):
+    def __init__(self, ai_settings, screen):
         """Inicializa a espaçonave e define sua posição inicial."""
         self.screen = screen
-
+        self.ai_settings = ai_settings
         # Carrega a espaçonave e obtém seu rect.
         self.image = pygame.image.load("images/ship.bmp")
         self.rect = self.image.get_rect()
@@ -13,19 +13,25 @@ class Ship:
         # Inicia cada nova espaçonave na parte inferior central da tela.
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.screen_rect.bottom
+        # Armazena um valor decimal para o centro da espaçonave.
+        self.center = float(self.rect.centerx)
         # Flag de movimento.
         self.moving_right = False
         self.moving_left = False
 
     def update(self):
         """Atualiza a posição da espaçonave conforme a flag de movimento."""
-        # Se a flag estiver verdadeira, move a espaçonave para a direita.
-        if self.moving_right:
-            self.rect.centerx += 1
+        # Atualiza o valor do centro da espaçonave, e não o retângulo
+        if self.moving_right and self.rect.right < self.screen_rect.right:
+            self.center += self.ai_settings.ship_speed_factor
 
-        # Se a flag estiver verdadeira, move a espaçonave para a esquerda.
-        if self.moving_left:
-            self.rect.centerx -= 1
+        if self.moving_left and self.rect.left > 0:
+            self.center -= self.ai_settings.ship_speed_factor
+
+        # Atualiza o objeto rect de acordo com self.center.
+        self.rect.centerx = self.center
+
+        print(self.rect)
 
     def blitme(self):
         """Desenha a espaçonave em sua posição atual."""
