@@ -370,7 +370,7 @@ class Janela:
         except ValueError:
             self.lb_erro["text"] = "Erro: Digite um valor entre 0 e 10."
 
-    def restart(self,event):
+    def restart(self):
         resposta = mbox.askquestion("Reiniciar", "Deseja reiniciar o programa?")
         if resposta == "yes":
             self.lb_erro["text"] = ""
@@ -383,7 +383,7 @@ class Janela:
                                + "     X    " + str(
                 self.placar2) + "      Máquina"
 
-    def info(self, event):
+    def info(self):
         info = mbox.showinfo("Informações", "Feito por João Lucas com a ajuda de Jefferson Lobato.\n"
                                             "                                                                      "
                                             "Este software está licenciado sobre a licensa de código aberto GPL 3.0 "
