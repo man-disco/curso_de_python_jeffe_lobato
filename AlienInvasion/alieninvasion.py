@@ -18,7 +18,7 @@ def run_game():
     aliens = Group()
     # Cria um grupo onde serão armazenados os projéteis.
     bullets = Group()
-    gf.create_fleet(ai_settings, screen, aliens)
+    gf.create_fleet(ai_settings, screen, ship, aliens)
 
     # Inicia o laço principal do jogo.
     while True:
