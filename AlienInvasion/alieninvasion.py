@@ -1,4 +1,6 @@
 import pygame
+
+import AlienInvasion.game_functions
 from settings import Settings
 from ship import Ship
 import game_functions as gf
@@ -26,6 +28,7 @@ def run_game():
         ship.update()
         bullets.update()
         gf.update_bullets(bullets)
+        gf.update_aliens(aliens)
         gf.update_screen(ai_settings, screen, ship, aliens, bullets)
 
 
