@@ -60,6 +60,7 @@ def update_bullets(bullets):
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
+    bullets.update()
 
 
 def fire_bullet(ai_settings, screen, ship, bullets):
@@ -107,6 +108,24 @@ def create_fleet(ai_settings, screen, ship, aliens):
             create_alien(ai_settings, screen, aliens, alien_number, row_number)
 
 
-def update_aliens(aliens):
-    """Atualiza as posições de todos os alienígenas da frota."""
+def check_fleet_edges(ai_settings, aliens):
+    """Responde apropriadamente se algum alienígena alcançou uma borda."""
+    for alien in aliens:
+        if alien.check_edges():
+            change_fleet_direction(ai_settings, aliens)
+            break
+
+
+def change_fleet_direction(ai_settings, aliens):
+    """Faz toda a frota descer e muda a sua direção."""
+    for alien in aliens.sprites():
+        alien.rect.y += ai_settings.fleet_drop_speed
+    ai_settings.fleet_direction *= -1
+
+
+def update_aliens(ai_settings, aliens):
+    """Verifica se a frota está em uma das bordas e então
+    atualiza as posições de todos os alienígenas da frota."""
+    check_fleet_edges(ai_settings, aliens)
     aliens.update()
+
