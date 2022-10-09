@@ -7,6 +7,7 @@ class Settings:
 
         # Configurações da espaçonave.
         self.ship_speed_factor = 1.5
+        self.ships_left = 3
 
         # Configurações de projéteis.
         self.bullet_speed_factor = 1
@@ -16,9 +17,10 @@ class Settings:
         self.bullets_allowed = 3
 
         # Configurações dos alienígenas.
-        self.alien_speed_factor = 0.2
+        self.alien_speed_factor = 1
         self.fleet_drop_speed = 10
 
         # fleet_direction igual à 1 representa a direita; -1 representa a esquerda.
         self.fleet_direction = 1
+
 
