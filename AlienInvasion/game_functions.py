@@ -5,17 +5,41 @@ from alien import Alien
 from time import sleep
 
 
-def check_events(ai_settings, screen, ship, bullets):
+def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets):
     # Observa eventos de teclado e de mouse.
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-
+        # Move a espaçonave para a direita ou esquerda quando a tecla é pressionada.
         elif event.type == pygame.KEYDOWN:
             check_keydown_events(event, ai_settings, screen, ship, bullets)
-
+        # Quando as teclas de movimento são soltas, a espaçonave para.
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, ship)
+
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y)
+
+
+def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y):
+    """Inicia um novo jogo quando o jogador clicar em play."""
+    button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
+    if button_clicked and not stats.game_active:
+        # Oculta o ponteiro do mouse.
+        pygame.mouse.set_visible(False)
+
+        # Reinicia os dados estatísticos do jogo.
+        stats.reset_stats()
+        stats.game_active = True
+
+        # Esvazia a lista de alienígenas e projeteis.
+        aliens.empty()
+        bullets.empty()
+
+        # Cria uma nova frota alienígena e centraliza a espaçonave.
+        create_fleet(ai_settings, screen, ship, aliens)
+        ship.center_ship()
 
 
 def check_keydown_events(event, ai_settings, screen, ship, bullets):
@@ -154,6 +178,7 @@ def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
 
     else:
         stats.game_active = False
+        pygame.mouse.set_visible(True)
 
 
 def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
@@ -163,19 +188,8 @@ def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
     for alien in aliens.sprites():
         if alien.rect.bottom >= screen_rect.bottom:
             # Traz esse caso do mesmo modo quando a espaçonave é atingida.
-            # Decrementa ships_left.
-            stats.ships_left -= 1
-
-            # Esvazia a lista de alienígenas e projéteis.
-            aliens.empty()
-            bullets.empty()
-
-            # Cria uma nova frota e centraliza a espaçonave
-            create_fleet(ai_settings, screen, ship, aliens)
-            ship.center_ship()
-
-            # Faz uma pausa.
-            sleep(0.5)
+            ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+            break
 
 
 def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):

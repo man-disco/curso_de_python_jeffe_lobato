@@ -6,6 +6,7 @@ from game_stats import GameStats
 from pygame.sprite import Group
 from button import Button
 
+
 def run_game():
     # Inicializa o pygame, as configurações e o objeto screen.
     pygame.init()
@@ -27,11 +28,12 @@ def run_game():
     gf.create_fleet(ai_settings, screen, ship, aliens)
     # Inicia o laço principal do jogo.
     while True:
-        gf.check_events(ai_settings, screen, ship, bullets)
+        gf.check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets)
         if stats.game_active:
             ship.update()
             gf.update_bullets(bullets, aliens, ai_settings, screen, ship)
             gf.update_aliens(ai_settings, stats, screen, ship, aliens, bullets)
+            print(stats.ships_left)
 
         gf.update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button)
 
