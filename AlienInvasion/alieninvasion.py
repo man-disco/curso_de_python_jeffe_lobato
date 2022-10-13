@@ -36,10 +36,6 @@ def run_game():
     # Inicia o laço principal do jogo.
     while True:
         clock.tick(fps)
-        print(clock)
-        print(ai_settings.alien_speed_factor)
-        print(ai_settings.ship_speed_factor)
-        print(ai_settings.bullet_speed_factor)
 
         gf.check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets)
         if stats.game_active:

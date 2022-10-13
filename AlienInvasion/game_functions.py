@@ -83,6 +83,7 @@ def update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button
         play_button.draw_button()
 
     # Desenha a informação sobre a pontuação.
+    sb.prep_score()
     sb.show_score()
 
     # Deixa a tela mais recente visível.
