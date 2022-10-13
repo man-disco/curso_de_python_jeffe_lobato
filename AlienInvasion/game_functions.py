@@ -5,7 +5,7 @@ from alien import Alien
 from time import sleep
 
 
-def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets):
+def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets):
     # Observa eventos de teclado e de mouse.
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -19,10 +19,10 @@ def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets)
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y)
+            check_play_button(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets, mouse_x, mouse_y)
 
 
-def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y):
+def check_play_button(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets, mouse_x, mouse_y):
     """Inicia um novo jogo quando o jogador clicar em play."""
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
     if button_clicked and not stats.game_active:
@@ -32,6 +32,8 @@ def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bul
         # Reinicia os dados estatísticos do jogo.
         stats.reset_stats()
         stats.game_active = True
+        ai_settings.initialize_dynamic_settings()
+        sb.show_score()
 
         # Esvazia a lista de alienígenas e projeteis.
         aliens.empty()
@@ -65,7 +67,7 @@ def check_keyup_events(event, ship):
         ship.moving_left = False
 
 
-def update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button):
+def update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button, sb):
     """"Atualiza as imagens na tela e alterna para a nova tela."""
     # Redesenha a tela a cada passagem pelo laço.
     screen.fill(ai_settings.bg_color)
@@ -76,27 +78,42 @@ def update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button
     ship.blitme()
     aliens.draw(screen)
 
+    # Desenha o botão play se o jogo estiver inativo.
     if not stats.game_active:
         play_button.draw_button()
+
+    # Desenha a informação sobre a pontuação.
+    sb.show_score()
+
     # Deixa a tela mais recente visível.
     pygame.display.flip()
 
 
-def update_bullets(bullets, aliens, ai_settings, screen, ship):
+def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets):
     # Livra-se dos projéteis que desapareceram.
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
     bullets.update()
+    check_bullets_alien_collision(ai_settings, screen, stats, sb, ship, aliens, bullets)
 
+
+def check_bullets_alien_collision(ai_settings, screen, stats, sb, ship, aliens, bullets):
+    """Responde a colisões entre projéteis e alienígenas"""
     # Verifica se algum projétil atingiu os alienígenas.
     # Em caso afirmativo, livra-se do projétil e do alienígena.
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
 
     # Destrói os projéteis existentes e cria uma nova frota.
     if len(aliens) == 0:
+        ai_settings.increase_speed()
         bullets.empty()
         create_fleet(ai_settings, screen, ship, aliens)
+
+    if collisions:
+        for aliens in collisions.values():
+            stats.score += ai_settings.alien_points * len(aliens)
+            sb.prep_score()
 
 
 def fire_bullet(ai_settings, screen, ship, bullets):
