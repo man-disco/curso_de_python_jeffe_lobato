@@ -83,8 +83,8 @@ def update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button
         play_button.draw_button()
 
     # Desenha a informação sobre a pontuação.
-    sb.prep_score()
     sb.show_score()
+    sb.prep_score()
 
     # Deixa a tela mais recente visível.
     pygame.display.flip()
@@ -116,6 +116,13 @@ def check_bullets_alien_collision(ai_settings, screen, stats, sb, ship, aliens, 
             stats.score += ai_settings.alien_points * len(aliens)
             sb.prep_score()
 
+        check_high_score(stats, sb)
+
+def check_high_score(stats, sb):
+    """Verifica se há uma nova pontuação máxima."""
+    if stats.score > stats.high_score:
+        stats.high_score = stats.score
+        sb.prep_high_score()
 
 def fire_bullet(ai_settings, screen, ship, bullets):
     # Cria um novo projétil e o adiciona ao grupo de projéteis.
