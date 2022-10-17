@@ -11,6 +11,6 @@ class GameStats:
         """Inicializa os dados estatísticos que podem mudar durante o jogo."""
         self.ships_left = self.ai_settings.ships_left
         self.score = 0
-
+        self.level = 1
         # A pontuação máxima jamais deverá ser reiniciada.
 
