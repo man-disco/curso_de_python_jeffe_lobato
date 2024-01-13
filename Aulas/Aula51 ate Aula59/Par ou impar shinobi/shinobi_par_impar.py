@@ -38,21 +38,21 @@ class Janela:
         self.fr8.pack()
         # -- Imagens --
         # Imagem do jogador
-        self.img_jogador = PhotoImage(file="arq_projeto_shinobi/jogador.png")
+        self.img_jogador = PhotoImage(file="Aulas/Aula51 ate Aula59/Par ou impar shinobi/arq_projeto_shinobi/jogador.png")
         # Imagem da maquina
-        self.img_maq = PhotoImage(file="arq_projeto_shinobi/robo.png")
+        self.img_maq = PhotoImage(file="Aulas/Aula51 ate Aula59/Par ou impar shinobi/arq_projeto_shinobi/robo.png")
         # Imagens dos números
-        self.img0 = PhotoImage(file="arq_projeto_shinobi/0.png")
-        self.img1 = PhotoImage(file="arq_projeto_shinobi/1.png")
-        self.img2 = PhotoImage(file="arq_projeto_shinobi/2.png")
-        self.img3 = PhotoImage(file="arq_projeto_shinobi/3.png")
-        self.img4 = PhotoImage(file="arq_projeto_shinobi/4.png")
-        self.img5 = PhotoImage(file="arq_projeto_shinobi/5.png")
-        self.img6 = PhotoImage(file="arq_projeto_shinobi/6.png")
-        self.img7 = PhotoImage(file="arq_projeto_shinobi/7.png")
-        self.img8 = PhotoImage(file="arq_projeto_shinobi/8.png")
-        self.img9 = PhotoImage(file="arq_projeto_shinobi/9.png")
-        self.img10 = PhotoImage(file="arq_projeto_shinobi/10.png")
+        self.img0 = PhotoImage(file="Aulas/Aula51 ate Aula59/Par ou impar shinobi/arq_projeto_shinobi/0.png")
+        self.img1 = PhotoImage(file="Aulas/Aula51 ate Aula59/Par ou impar shinobi/arq_projeto_shinobi/1.png")
+        self.img2 = PhotoImage(file="Aulas/Aula51 ate Aula59/Par ou impar shinobi/arq_projeto_shinobi/2.png")
+        self.img3 = PhotoImage(file="Aulas/Aula51 ate Aula59/Par ou impar shinobi/arq_projeto_shinobi/3.png")
+        self.img4 = PhotoImage(file="Aulas/Aula51 ate Aula59/Par ou impar shinobi/arq_projeto_shinobi/4.png")
+        self.img5 = PhotoImage(file="Aulas/Aula51 ate Aula59/Par ou impar shinobi/arq_projeto_shinobi/5.png")
+        self.img6 = PhotoImage(file="Aulas/Aula51 ate Aula59/Par ou impar shinobi/arq_projeto_shinobi/6.png")
+        self.img7 = PhotoImage(file="Aulas/Aula51 ate Aula59/Par ou impar shinobi/arq_projeto_shinobi/7.png")
+        self.img8 = PhotoImage(file="Aulas/Aula51 ate Aula59/Par ou impar shinobi/arq_projeto_shinobi/8.png")
+        self.img9 = PhotoImage(file="Aulas/Aula51 ate Aula59/Par ou impar shinobi/arq_projeto_shinobi/9.png")
+        self.img10 = PhotoImage(file="Aulas/Aula51 ate Aula59/Par ou impar shinobi/arq_projeto_shinobi/10.png")
 
         # -- Variáveis --
         self.placar1 = 0
@@ -394,9 +394,9 @@ janela = Janela(raiz)
 # Tamanho da janela
 raiz.geometry("750x750+300+30")
 
-# raiz.iconbitmap('Aulas/Aula51 ate Aula59/par_impar_shinobi/arq_projeto_shinobi/jogadorr.ico') não funciona no Ubuntu.
+# raiz.iconbitmap('Aulas/Aula51 ate Aula59/par_impar_shinobi/Aulas/Aula51 ate Aula59/Par ou impar shinobi/arq_projeto_shinobi/jogadorr.ico') não funciona no Ubuntu.
 # Tente:
-icon = PhotoImage(file="arq_projeto_shinobi/jogador.png")
+icon = PhotoImage(file="Aulas/Aula51 ate Aula59/Par ou impar shinobi/arq_projeto_shinobi/jogador.png")
 raiz.tk.call('wm', 'iconphoto', raiz._w, icon)
 raiz.title("Tux: Par ou Ímpar")
 raiz["bg"] = cinza1
